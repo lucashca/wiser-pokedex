@@ -1,0 +1,38 @@
+import BugIconSvg from './bug.svg';
+import DarkIconSvg from './dark.svg';
+import DragonIconSvg from './dragon.svg';
+import EletricIconSvg from './eletric.svg';
+import FairyIconSvg from './fairy.svg';
+import FightingIconSvg from './fighting.svg';
+import FireIconSvg from './fire.svg';
+import FlyingIconSvg from './flying.svg';
+import GhostIconSvg from './ghost.svg';
+import GrassIconSvg from './grass.svg';
+import GroundIconSvg from './ground.svg';
+import IceIconSvg from './ice.svg';
+import NormalIconSvg from './normal.svg';
+import PoisonIconSvg from './poison.svg';
+import RockIconSvg from './rock.svg';
+import SteelIconSvg from './steel.svg';
+import WaterIconSvg from './water.svg';
+import PsychicIconSvg from './psychic.svg';
+
+
+export const BugIcon = BugIconSvg;
+export const DarkIcon = DarkIconSvg;
+export const DragonIcon = DragonIconSvg;
+export const EletricIcon = EletricIconSvg;
+export const FairyIcon = FairyIconSvg;
+export const FightingIcon = FightingIconSvg;
+export const FireIcon = FireIconSvg;
+export const FlyingIcon = FlyingIconSvg;
+export const GhostIcon = GhostIconSvg;
+export const GrassIcon = GrassIconSvg;
+export const GroundIcon = GroundIconSvg;
+export const IceIcon = IceIconSvg;
+export const NormalIcon = NormalIconSvg;
+export const PoisonIcon = PoisonIconSvg;
+export const RockIcon = RockIconSvg;
+export const SteelIcon = SteelIconSvg;
+export const WaterIcon = WaterIconSvg;
+export const PsychicIcon = PsychicIconSvg;
