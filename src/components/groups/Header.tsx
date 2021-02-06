@@ -9,7 +9,6 @@ import SearchInput from "./SearchInput";
 export const Header = ({ haveBackground, position }: any) => {
 
     useEffect(() => {
-        console.log('counter updated', haveBackground);
     }, [haveBackground]);
 
     return (

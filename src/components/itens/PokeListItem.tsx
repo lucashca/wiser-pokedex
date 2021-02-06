@@ -4,7 +4,7 @@ import { DotsSvg, PokeballBgTypeSvg } from "../../assets/images";
 import pokemonService from "../../service/pokemonService";
 import { Loading, PokemonId, PokemonName } from "../../styles/styles";
 import { getTypeInfoAndColorsByPokemonType } from "../../utils/functions";
-import { transformPokemonTypes, trasnformPokemonId, trasnformPokemonName } from "../../utils/parser";
+import { transformPokemonTypes, trasnformPokemonId, transformCaptalize } from "../../utils/parser";
 import PokemonTypeList from "../groups/PokemonTypeList";
 import { PokemonArtWork } from "./PokemonArtWork";
 import { PokemonPersonalData } from "./PokemonPersonalData";
@@ -39,7 +39,7 @@ export default class PokeListItem extends PureComponent<Props, State> {
         pokemonService.getUrl(this.props.url).then((res: any) => {
             let id = trasnformPokemonId(res.data.id);
             let type = transformPokemonTypes(res.data.types);
-            let name = trasnformPokemonName(this.props.name);
+            let name = transformCaptalize(this.props.name);
 
             this.setState({
                 id,

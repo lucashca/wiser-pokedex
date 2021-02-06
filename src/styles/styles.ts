@@ -9,6 +9,13 @@ export const Title = styled.Text`
 
 `;
 
+export const LevelText = styled.Text`
+  color: #000;
+  fontFamily: 'SFProDisplay-Regular';
+  fontSize:12px;
+  fontWeight:700;
+`;
+
 export const Description = styled.Text`
   color: #747476;
   fontFamily: 'SFProDisplay-Regular';
@@ -95,4 +102,73 @@ textAlign:center;
 color:#fff;
 textShadowColor:#f0f,
 textShadowOffset:5px 5px,
+`;
+
+
+export const InfoTitleText = styled.Text`
+fontFamily: 'SFProDisplay-Regular';
+fontSize:16px;
+fontWeight:700;
+lineHeight:19px;
+`;
+
+export const PokemonDescriptionText = styled.Text`
+  fontFamily: 'SFProDisplay-Regular';  
+  color:#747476;
+  fontWeight:400;
+  fontSize:15.5px;
+  textAlign:justify;
+  marginBottom:10px;
+`;
+
+
+export const Table = styled.View`
+  flexDirection: column;
+  marginTop: 20px;
+  alignItems: center;
+  
+`;
+
+export const Row = styled.View`
+  flexDirection: row;
+  marginTop: 8px;
+`;
+
+
+
+export const RowData = styled.View`
+  flex: 1;
+  padding:2px;
+  flexDirection: row;
+`;
+
+export const RowDataDouble = styled.View`
+  flex: 2;
+  padding:2px;
+  flexDirection: row;
+`;
+
+
+
+export const RowDataTitle = styled.Text`
+  fontFamily: SFProDisplay-Regular;
+  fontSize: 12px;
+  fontWeight: 500;
+`;
+export const RowDataText = styled.Text`
+  fontFamily: SFProDisplay-Regular;
+  fontSize: 16px;
+  fontWeight: 400;
+  color: #747476;
+`;
+
+
+export const TabScreen = styled.View`
+  flex: 1;
+  backgroundColor: #fff;
+  borderTopLeftRadius: 30px;
+  borderTopRightRadius: 30px;
+  padding: 40px;
+  paddingTop: 30px;
+
 `;

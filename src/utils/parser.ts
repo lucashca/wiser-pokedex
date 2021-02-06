@@ -23,7 +23,24 @@ export function transformPokemonTypes(types: any) {
 
 }
 
-export function trasnformPokemonName(name: string) {
+export function transformCaptalize(name: string) {
     return name[0].toUpperCase() + name.slice(1);
 }
 
+
+
+export function trasnforFlavorText(text: string) {
+
+    return text.replace(/(\r\n|\n|\r)/gm, "");
+}
+
+export function getMeterstoFootPol(metros: number) {
+    let pe = Math.floor(metros / 0.3048);
+    let pol = ((metros % 0.3048) / 0.0254);
+    if (pol < 10) {
+        return pe + "'0" + pol.toFixed(0) + "''";
+    } else {
+        return pe + "'" + pol.toFixed(0) + "''";
+    }
+
+};

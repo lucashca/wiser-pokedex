@@ -6,3 +6,9 @@ export interface TypeInfoColor {
     typeColor: string;
     icon: any;
 }
+
+
+export interface ActionRedux {
+    type: string,
+    value: any;
+}

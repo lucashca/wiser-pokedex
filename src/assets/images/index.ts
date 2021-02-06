@@ -8,8 +8,9 @@ import Search from '../../assets/images/search.svg';
 import PokeballSm from '../../assets/images/pokeball_small.svg';
 
 import DotsL from '../../assets/images/dots_large.svg';
+import Arrow from '../../assets/images/arrow.svg';
 
-
+export const ArrowSvg = Arrow;
 export const DotsSvg = Dots;
 export const DotsLargeSvg = DotsL;
 export const PokeballSmallSvg = PokeballSm;

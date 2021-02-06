@@ -18,3 +18,14 @@ export enum PokemonTypesEnum {
     Steel = 'steel',
     Water = 'water',
 }
+
+
+export enum EvolutionDataStoreActions {
+    ADD = 'ADD_EVOLUTION',
+    CLEAN = 'CLEAN_EVOLUTION',
+}
+
+export enum PokeListStoreActions {
+    ADD = 'ADD_POKELIST',
+    CLEAN = 'CLEAN_POKELIST',
+}

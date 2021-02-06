@@ -1,3 +1,4 @@
+import { GLOBAL_CONFIG } from "../../global";
 import mainServer from "./mainServer";
 
 class PokemonService {
@@ -10,12 +11,30 @@ class PokemonService {
     async getUrl(url: string) {
         try {
             mainServer.setBaseURL('');
-
-            return mainServer.get(url);
+            let prom = mainServer.get(url);
+            mainServer.setBaseURL(GLOBAL_CONFIG.serverUrl);
+            return prom;
         } catch (error) {
-            console.log(error);
+            mainServer.setBaseURL(GLOBAL_CONFIG.serverUrl);
         }
     }
+
+    async getPokemonSpeciesById(id: number) {
+        try {
+            return mainServer.get('/pokemon-species/' + id);
+        } catch (error) {
+        }
+    }
+
+
+    async getPokemonEvolutionById(id: number) {
+        try {
+            return mainServer.get('/evolution-chain/' + id);
+        } catch (error) {
+        }
+    }
+
+
     async getPokemonById(id: number) {
         try {
             return mainServer.get('/pokemon', { id });
@@ -27,13 +46,12 @@ class PokemonService {
         try {
             return mainServer.get('/pokemon?limit=' + limit + '&offset=' + offset);
         } catch (error) {
-            console.log(error);
         }
     }
 
     async getPokemonByName(name: number) {
         try {
-            return mainServer.get('/pokemon', { name });
+            return mainServer.get('/pokemon/' + name,);
         } catch (error) {
         }
     }

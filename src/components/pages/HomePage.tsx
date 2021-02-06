@@ -1,11 +1,8 @@
 
 
-import React, { Component, constructor } from 'react';
+import React, { Component } from 'react';
 
-import { Animated, Button, Dimensions, FlatList, ImageBackground, ListView, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableHighlight, TouchableWithoutFeedback, View } from 'react-native';
-
-
-import Axios from 'axios';
+import { Animated, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 
 import { PokeballBgImageSvg } from '../../assets/images';
 import pokemonService from '../../service/pokemonService';
@@ -15,29 +12,19 @@ import PokeList from '../groups/PokeList';
 import { Header } from '../groups/Header';
 
 
+import { connect } from 'react-redux';
+import { addPokeList } from '../../store/reducerPokeList';
+import { addEvolutionData } from '../../store/reducersEvolutionData';
 
-
-
-
-var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
-
-
-
-export interface Props {
-    navigation: any;
-}
 
 export interface State {
-    data: any[];
     next: string;
     onRequest: boolean;
     headerBackground: boolean;
-    position: string;
 
 }
 
-class HomePage extends Component<Props, State> {
+class HomePage extends Component<any, State> {
     scrollY: Animated.Value;
     translateY: any;
     pokemonsData: any;
@@ -45,11 +32,9 @@ class HomePage extends Component<Props, State> {
     constructor(props: any) {
         super(props);
         this.state = {
-            data: [],
             next: '',
             onRequest: false,
             headerBackground: false,
-            position: 'relative',
         };
         this.scrollY = new Animated.Value(0);
         const difClamp = Animated.diffClamp(this.scrollY, 0, 300);
@@ -58,16 +43,20 @@ class HomePage extends Component<Props, State> {
             outputRange: [0, -160]
         });
 
+
     }
 
     componentDidMount() {
-        this.getPokemons(20, 0);
+        this.getPokemons(5, 0);
+
+
     }
 
     getPokemons(limit: number, offset: number) {
         console.log("GetPokemons");
         pokemonService.getPokemons(limit, offset).then((res: any) => {
-            this.setState({ data: res.data.results, next: res.data.next });
+            this.props.dispatch(addPokeList(res.data.results));
+            this.setState({ next: res.data.next });
         }).catch((err) => {
         });
     }
@@ -90,7 +79,8 @@ class HomePage extends Component<Props, State> {
         if (!this.state.onRequest) {
             this.setState({ onRequest: true }, () => {
                 pokemonService.getUrl(this.state.next).then((res: any) => {
-                    this.setState({ data: [...this.state.data, ...res.data.results], next: res.data.next });
+                    this.props.dispatch(addPokeList(res.data.results));
+                    this.setState({ next: res.data.next });
                 }).finally(() => {
                     this.setState({ onRequest: false });
                 });
@@ -101,6 +91,8 @@ class HomePage extends Component<Props, State> {
     onClickItem(item: any) {
         this.props.navigation.navigate('PokemonInfo', { item });
     };
+
+
 
     render() {
         return (
@@ -113,7 +105,7 @@ class HomePage extends Component<Props, State> {
                     </Animated.View>
                     <PokeList
                         style={styles.list}
-                        data={this.state.data}
+                        data={this.props.data}
                         onScroll={(e: any) => { this.onScroll(e.nativeEvent.contentOffset.y); }}
                         onScrollEnd={(e: any) => { this.onScrollEnd(e); }}
                         onClickItem={(item: any) => { this.onClickItem(item); }}
@@ -152,4 +144,12 @@ const styles = StyleSheet.create({
 
 });
 
-export default HomePage;
+
+const mapStateToProps = (state: any) => {
+    return { data: state.pokemonsList.pokemonsList };
+};
+
+
+
+export default connect(mapStateToProps)(HomePage);
+

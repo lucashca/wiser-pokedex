@@ -6,12 +6,12 @@ import { ImageBox, ImageBoxNoFlex } from "../../styles/styles";
 
 
 
-export function PokemonArtWork({ artworkUrl }: any) {
+export function PokemonArtWork({ artworkUrl, height = 130, width = 130 }: any) {
 
     return (
         <ImageBox >
             <Image
-                style={{ width: 130, height: 130 }}
+                style={{ width, height }}
                 source={{ uri: artworkUrl }}
             />
         </ImageBox>
@@ -19,12 +19,12 @@ export function PokemonArtWork({ artworkUrl }: any) {
 }
 
 
-export function PokemonArtWorkSmall({ artworkUrl }: any) {
+export function PokemonArtWorkSmall({ artworkUrl, height = 125, width = 125 }: any) {
 
     return (
         <ImageBoxNoFlex >
             <Image
-                style={{ width: 125, height: 125 }}
+                style={{ width, height }}
                 source={{ uri: artworkUrl }}
             />
         </ImageBoxNoFlex>
