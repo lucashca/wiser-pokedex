@@ -13,7 +13,7 @@ import { getTypeInfoAndColorsByPokemonType } from '../styles/colors';
 import { Loading } from '../styles/styles';
 import { trasnformPokemonId, transformPokemonTypes, transformCaptalize } from '../utils/parser';
 import { MyTabs } from './subPages/TabsStats';
-
+import { BackHandler } from 'react-native';
 
 export const PokemonInfoPage: any = ({ route, navigation }: any) => {
 
@@ -31,7 +31,13 @@ export const PokemonInfoPage: any = ({ route, navigation }: any) => {
 
     const onPressBackButton = () => {
         navigation.navigate('Home');
+        return true;
     };
+
+
+    BackHandler.addEventListener('hardwareBackPress', onPressBackButton);
+
+
 
 
     if (pokemonData) {

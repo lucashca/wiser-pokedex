@@ -3,27 +3,34 @@ import React from "react";
 import { Animated } from "react-native";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { COLOR_TEXT_GRAY } from "../../styles/colors";
-import { Loading } from "../../styles/styles";
-import { PokemonItemList } from "../../utils/iterfaces";
+
 import PokeListItem from "../itens/PokeListItem";
+import { useFindNewPokemons } from "../../hooks/findPokemons";
+import { POKEMON_ITEM_HEIGHT } from "../../../global";
 
 interface Props {
-    data: any[];
+
     onScroll: Function;
-    onScrollEnd: Function;
+
     style: any;
     onClickItem: Function;
-    setFlatListRef: Function;
+
+    animatedValue: any;
 }
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 
-const ITEM_HEIGHT = 160;
 
 export const PokeList = (props: Props) => {
 
+
+    const [pokemons, fetchMore] = useFindNewPokemons();
+
+    const getItemLayout = (data: any, index: any) => {
+
+        return { length: POKEMON_ITEM_HEIGHT, offset: POKEMON_ITEM_HEIGHT * index, index };
+    };
     const renderItem = ({ item }: any) => {
         return (
             <TouchableOpacity onPress={() => props.onClickItem(item)}>
@@ -33,37 +40,29 @@ export const PokeList = (props: Props) => {
     };
 
 
-    const getItemLayout = (data: any, index: any) => {
-
-        return { length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index };
-    };
 
 
-    if (props.data && props.data.length > 0) {
-        return (
-            <AnimatedFlatList
-                key={'Flat-key'}
-                data={props.data}
-                renderItem={renderItem}
-                initialNumToRender={10}
-                scrollEventThrottle={16}
-                keyExtractor={(item: any) => item.url}
-                onScroll={(evt) => { props.onScroll(evt); }}
-                onEndReached={(evt) => { props.onScrollEnd(evt); }}
-                onEndReachedThreshold={1}
-                ref={(ref: any) => { props.setFlatListRef(ref); }}
-                style={props.style}
-                getItemLayout={getItemLayout}
-                contentContainerStyle={{ paddingBottom: 250 }
-                }
-            />
 
-        );
-    } else {
-        return (
-            <Loading size='large' color={COLOR_TEXT_GRAY} />
-        );
-    }
+    return (
+        <AnimatedFlatList
+            key={'Flat-key'}
+            data={pokemons}
+            renderItem={renderItem}
+            initialNumToRender={10}
+            scrollEventThrottle={16}
+            keyExtractor={(item: any) => item.url}
+            onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: props.animatedValue } } }],
+                { useNativeDriver: true, listener: (event: any) => { props.onScroll(event.nativeEvent.contentOffset.y); } })}
+            onEndReached={fetchMore}
+            onEndReachedThreshold={0.9}
+            style={props.style}
+            getItemLayout={getItemLayout}
+            contentContainerStyle={{ paddingBottom: 250 }
+            }
+        />
+    );
+
 
 };
 

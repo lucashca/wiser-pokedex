@@ -23,7 +23,7 @@ export function transformCaptalize(name: string) {
     return name[0].toUpperCase() + name.slice(1);
 }
 
-export function trasnforFlavorText(text: string) {
+export function transformFlavorText(text: string) {
     return text.replace(/(\r\n|\n|\r)/gm, "");
 }
 
@@ -36,3 +36,20 @@ export function getMeterstoFootPol(metros: number) {
         return pe + "'" + pol.toFixed(0) + "''";
     }
 };
+
+
+export function trasnformPokemonData(data: any) {
+
+    let id = trasnformPokemonId(data.id);
+    let type = transformPokemonTypes(data.types);
+    let name = transformCaptalize(data.name);
+    let pokemonData = {
+        id,
+        type,
+        name,
+        artworkUrl: data.sprites.other['official-artwork'].front_default
+    };
+
+    return pokemonData;
+
+}

@@ -1,12 +1,9 @@
 import { StoreActionsTypes } from "../../utils/enums";
 
-export const storeActionsAddPokeList = (value: any) => ({
-    type: StoreActionsTypes.ADD_POKELIST,
-    value
-});
 
-export const storeActionsCleanPokeList = () => ({
-    type: StoreActionsTypes.CLEAN_POKELIST,
+export const storeActionsAddPokemonData = (value: any) => ({
+    type: StoreActionsTypes.ADD_POKEMON_DATA,
+    value: { key: value.name.toLowerCase().trim(), data: value }
 });
 
 

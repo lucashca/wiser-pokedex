@@ -3,18 +3,17 @@
 
 
 import AsyncStorage from '@react-native-community/async-storage';
+import { APP_KEY, POKEMON_DATA_KEY } from '../../global';
 
 
-const APP_KEY = '@POKEDEX_STORAGE:';
-const POKEMON_DATA_KEY = 'POKEMONDATA:';
 
 
 const parseKeyPokemonData = (key: string) => {
-    return APP_KEY + POKEMON_DATA_KEY + key;
+    return APP_KEY + POKEMON_DATA_KEY + key.toLowerCase().trim();
 };
 
-export const storePokemonData = (key: string, value: any) => {
-    let myKey = parseKeyPokemonData(key);
+export const asyncStoragePokemonData = (value: any) => {
+    let myKey = parseKeyPokemonData(value.name);
     return AsyncStorage.setItem(myKey, JSON.stringify(value));
 };
 

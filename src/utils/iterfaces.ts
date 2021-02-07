@@ -1,4 +1,3 @@
-import { Component } from "react";
 
 export interface TypeInfoColor {
     name: string;
@@ -14,7 +13,8 @@ export interface PokemonItemList {
 }
 
 export interface MyStore {
-    pokemonsList: PokemonItemList[],
+    pokemonsList: PokemonItemList[];
+    pokemonsData: any,
     searchInputText: string,
     nextUrl: string,
     backUrl: string;
@@ -22,4 +22,9 @@ export interface MyStore {
 export interface ActionRedux {
     type: string,
     value: any;
+}
+
+export interface ActionSaga {
+    type: string,
+    payload: any;
 }

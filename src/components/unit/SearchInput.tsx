@@ -3,7 +3,8 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { SearchIcon } from "../../assets/images";
-import { storeActionsSetSearchText } from "../../redux/actions/action";
+import { storeActionsSetSearchText } from "../../redux/actions/actionRedux";
+
 import { MyStore } from "../../utils/iterfaces";
 
 

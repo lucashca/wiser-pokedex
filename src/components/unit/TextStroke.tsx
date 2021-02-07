@@ -26,7 +26,6 @@ export function TextStroke({ text, style }: any) {
                 textAnchor="middle"
                 letterSpacing='5'
                 fontFamily='SFProDisplay-Regular'
-
             >
                 {text}
             </Text>

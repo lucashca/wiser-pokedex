@@ -1,8 +1,9 @@
-import { StoreActionsTypes } from "../../utils/enums";
-import { ActionRedux, MyStore } from "../../utils/iterfaces";
+import { StoreActionsTypes } from "../utils/enums";
+import { MyStore, ActionRedux } from "../utils/iterfaces";
 
 const STORE_INITIAL_STATE: MyStore = {
     pokemonsList: [],
+    pokemonsData: {},
     nextUrl: '',
     searchInputText: '',
     backUrl: '',
@@ -12,6 +13,7 @@ const STORE_INITIAL_STATE: MyStore = {
 
 
 export function reducerSavePokemonsList(state: MyStore = STORE_INITIAL_STATE, action: ActionRedux) {
+
     switch (action.type) {
         case StoreActionsTypes.ADD_POKELIST:
             return { ...state, pokemonsList: [...state.pokemonsList, ...action.value.data], nextUrl: action.value.next, backUrl: action.value.backUrl };
@@ -19,7 +21,8 @@ export function reducerSavePokemonsList(state: MyStore = STORE_INITIAL_STATE, ac
             return { ...state, pokemonsList: [], nextUrl: '' };
         case StoreActionsTypes.SET_SEARCH_TEXT:
             return { ...state, searchInputText: action.value };
-
+        case StoreActionsTypes.ADD_POKEMON_DATA:
+            return { ...state, pokemonsData: { ...state.pokemonsData, [action.value.key]: action.value.data } };
         default:
             return state;
     }

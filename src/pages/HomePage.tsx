@@ -9,7 +9,8 @@ import { Header } from '../components/groups/Header';
 import { Menu } from '../components/groups/Menu';
 import { PokeList } from '../components/groups/PokeList';
 import PokeListItem from '../components/itens/PokeListItem';
-import { storeActionsCleanSearchText, storeActionsCleanPokeList, storeActionsAddPokeList } from '../redux/actions/action';
+import { storeActionsCleanSearchText } from '../redux/actions/actionRedux';
+
 import pokemonService from '../service/pokemonService';
 import { PokemonDescriptionText, MainContainer } from '../styles/styles';
 import { MyStore } from '../utils/iterfaces';
@@ -18,121 +19,69 @@ export interface State {
     onRequest: boolean;
     headerBackground: boolean;
     animatedValue: any;
+    pokemonByName: any;
 }
 
 const LIMIT_QUERY = 20;
-
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
-
-const ITEM_HEIGHT = 160;
-
 class HomePage extends Component<any, State> {
-    scrollY: Animated.Value;
     translateY: any;
-    pokemonsData: any;
-    flatListRef: any;
     constructor(props: any) {
         super(props);
-        this.state = {
-            onRequest: false,
-            headerBackground: false,
-            animatedValue: new Animated.Value(0),
-        };
-        this.scrollY = new Animated.Value(0);
+        this.state = { onRequest: false, headerBackground: false, animatedValue: new Animated.Value(0), pokemonByName: null };
         const difClamp = Animated.diffClamp(this.state.animatedValue, 0, 250);
         this.translateY = difClamp.interpolate({
             inputRange: [0, 300],
             outputRange: [0, -300],
             extrapolate: 'clamp',
         });
-
     }
 
     componentDidMount() {
-        this.getPokemonsInit();
+
+    }
+
+    componentDidUpdate() {
+        if (this.props.searchInputText != '') {
+            pokemonService.getPokemonByName(this.props.searchInputText.toLowerCase().trim()).then((res: any) => {
+                if (res?.status == 404) {
+                    this.showToastWithGravity('No Pokémon found!');
+                } else {
+                    let val = { name: res.data.name, url: res.config.baseURL + res.config.url };
+                    this.setState({ pokemonByName: val });
+                }
+                this.props.dispatch(storeActionsCleanSearchText());
+            });
+        }
     }
 
 
     showToastWithGravity = (text: string) => {
-        ToastAndroid.showWithGravity(
-            text,
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER
-        );
+        ToastAndroid.showWithGravity(text, ToastAndroid.SHORT, ToastAndroid.CENTER);
     };
 
-    componentDidUpdate(prevProps: any) {
-        if (this.props.searchInputText != '') {
-            let s =
-                pokemonService.getPokemonByName(this.props.searchInputText.toLowerCase().trim()).then((res: any) => {
-                    if (res?.status == 404) {
-                        this.showToastWithGravity('No Pokémon found!');
-                    } else {
-                        this.props.dispatch(storeActionsCleanSearchText());
-                        let val = { name: res.data.name, url: res.config.baseURL + res.config.url };
-                        this.props.dispatch(storeActionsCleanPokeList());
-                        this.props.dispatch(storeActionsAddPokeList({ data: [val], next: '', backUrl: '' }));
-
-                    }
-
-                    this.props.dispatch(storeActionsCleanSearchText());
-                });
-        }
-    }
-
-    getPokemonsInit = () => {
-        if (this.props.data && this.props.data.length === 0) {
-            this.getPokemons();
-        }
-    };
 
     getPokemons = () => {
-        this.props.dispatch(storeActionsCleanPokeList());
-        pokemonService.getPokemons(LIMIT_QUERY, 0).then((res: any) => {
-            this.props.dispatch(storeActionsAddPokeList({ data: res.data.results, next: res.data.next, backUrl: '' }));
-        }).catch((err) => {
-        });
-
+        this.setState({ pokemonByName: null });
     };
 
 
-    onScroll(yVal: number) {
-
-        console.log(yVal);
+    onScroll = (yVal: number) => {
         if (!this.state.headerBackground && yVal > 160) {
             this.setState({ headerBackground: true });
         }
         if (this.state.headerBackground == true && yVal < 50) {
             this.setState({ headerBackground: false });
         }
-        this.scrollY.setValue(yVal);
-    }
+    };
 
 
-    onScrollEnd(evt: any) {
-        if (!this.state.onRequest) {
-            this.setState({ onRequest: true }, () => {
-                if (this.props.next) {
-                    pokemonService.getUrl(this.props.next).then((res: any) => {
-                        this.props.dispatch(storeActionsAddPokeList({ data: res.data.results, next: res.data.next, backUrl: pokemonService.getBackUrlByNext(this.props.next, LIMIT_QUERY) }));
-                        //              this.flatListRef.scrollToOffset({ animated: true, offset: 10 });
-                    }).finally(() => {
-                        this.setState({ onRequest: false });
-                    });
-                } else {
-                    this.setState({ onRequest: false });
-                }
-            });
-        }
-    }
 
-    onClickItem(item: any) {
+    onClickItem = (item: any) => {
         this.props.navigation.navigate('PokemonInfo', { item });
     };
 
     getBtnComponent = () => {
-        if (this.props.data && this.props.data.length == 1) {
+        if (this.state.pokemonByName) {
             return (
                 <TouchableOpacity style={styles.btnAllPoke} onPress={this.getPokemons}>
                     <PokemonDescriptionText>See all Pokémons...</PokemonDescriptionText>
@@ -144,26 +93,8 @@ class HomePage extends Component<any, State> {
     };
 
 
-    setFlatListRef = (ref: any) => {
-        this.flatListRef = ref;
-    };
 
-    renderItem = ({ item }: any) => {
-        return (
-            <TouchableOpacity onPress={() => this.onClickItem(item)}>
-                <PokeListItem {...item} />
-            </TouchableOpacity>
-        );
-    };
-
-
-    getItemLayout = (data: any, index: any) => {
-
-        return { length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index };
-    };
     render() {
-
-
         return (
             <SafeAreaView style={styles.background}>
                 <PokeballBgImageSvg style={styles.pokeballBg} />
@@ -172,28 +103,20 @@ class HomePage extends Component<any, State> {
                     <Animated.View style={[styles.animatedView, { transform: [{ translateY: this.translateY }] }]}>
                         <Header haveBackground={this.state.headerBackground} />
                     </Animated.View>
-                    <AnimatedFlatList
-                        key={'Flat-key'}
-                        data={this.props.data}
-                        renderItem={this.renderItem}
-                        initialNumToRender={10}
-                        scrollEventThrottle={16}
-                        keyExtractor={(item: any) => item.url}
-                        onScroll={Animated.event(
-                            [{ nativeEvent: { contentOffset: { y: this.state.animatedValue } } }],
-                            { useNativeDriver: true, listener: (event: any) => { this.onScroll(event.nativeEvent.contentOffset.y); } })}
-
-                        onEndReached={(evt) => { this.onScrollEnd(evt); }}
-                        onEndReachedThreshold={1}
-                        ref={(ref: any) => { this.setFlatListRef(ref); }}
-                        style={styles.list}
-                        getItemLayout={this.getItemLayout}
-                        contentContainerStyle={{ paddingBottom: 250 }
-                        }
-                    />
-
+                    {!this.state.pokemonByName &&
+                        <PokeList
+                            animatedValue={this.state.animatedValue}
+                            onClickItem={this.onClickItem}
+                            onScroll={this.onScroll}
+                            style={styles.list}
+                        />
+                    }
+                    {this.state.pokemonByName &&
+                        <TouchableOpacity style={styles.pokemonItem} onPress={() => this.onClickItem(this.state.pokemonByName)}>
+                            <PokeListItem {...this.state.pokemonByName} />
+                        </TouchableOpacity>
+                    }
                     {this.getBtnComponent()}
-
                 </MainContainer>
             </SafeAreaView>
         );
@@ -204,6 +127,12 @@ class HomePage extends Component<any, State> {
 
 
 const styles = StyleSheet.create({
+    pokemonItem: {
+        flex: 1,
+        marginTop: 10,
+        paddingTop: 170,
+
+    },
     background: {
         backgroundColor: '#fff',
         flex: 1,
@@ -236,7 +165,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state: MyStore) => {
-    return { data: state.pokemonsList, searchInputText: state.searchInputText, next: state.nextUrl, backUrl: state.backUrl };
+    return { searchInputText: state.searchInputText };
 };
 
 

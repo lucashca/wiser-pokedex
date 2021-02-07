@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import pokemonService from "../../service/pokemonService";
-import { RowDataText, TabScreen, PokemonDescriptionText, InfoTitleText, Table, Row, RowData, RowDataTitle, RowDataDouble } from "../../styles/styles";
-import { transformCaptalize, trasnforFlavorText, getMeterstoFootPol } from "../../utils/parser";
+import { COLOR_TEXT_GRAY } from "../../styles/colors";
+import { RowDataText, TabScreen, PokemonDescriptionText, InfoTitleText, Table, Row, RowData, RowDataTitle, RowDataDouble, Loading } from "../../styles/styles";
+import { transformCaptalize, transformFlavorText, getMeterstoFootPol } from "../../utils/parser";
 
 
 export function AboutScreen({ pokemonData, mainColor, route }: any) {
@@ -36,14 +37,14 @@ export function AboutScreen({ pokemonData, mainColor, route }: any) {
             // Texto apresentado no modelo do figma
 
             if (Array.isArray(res.data.flavor_text_entries) && res.data.flavor_text_entries.length > 45 && res.data.flavor_text_entries[44].language.name == 'en') {
-                let text = trasnforFlavorText(res.data.flavor_text_entries[44].flavor_text);
+                let text = transformFlavorText(res.data.flavor_text_entries[44].flavor_text);
 
                 setFlavorText(text);
             } else {
                 if (Array.isArray(res.data.flavor_text_entries)) {
                     for (let t of res.data.flavor_text_entries) {
                         if (t.language.name == "en") {
-                            let text = trasnforFlavorText(t.flavor_text);
+                            let text = transformFlavorText(t.flavor_text);
                             setFlavorText(text);
                             break;
                         }
@@ -54,10 +55,12 @@ export function AboutScreen({ pokemonData, mainColor, route }: any) {
     });
 
 
+    const componentFlavorText = flavorText ? (<PokemonDescriptionText>{flavorText}</PokemonDescriptionText>) : (<Loading size={'small'} color={COLOR_TEXT_GRAY}></Loading>);
+
 
     return (
         <TabScreen>
-            <PokemonDescriptionText>{flavorText}</PokemonDescriptionText>
+            { componentFlavorText}
             <InfoTitleText style={{ color: mainColor }}>Pokédex data</InfoTitleText>
             <Table>
                 <Row>

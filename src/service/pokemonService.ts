@@ -37,7 +37,7 @@ class PokemonService {
 
     async getPokemonById(id: number) {
         try {
-            return mainServer.get('/pokemon', { id });
+            return mainServer.get('/pokemon/' + id);
         } catch (error) {
         }
     }
@@ -58,25 +58,6 @@ class PokemonService {
 
 
 
-    getBackUrlByNext(next: string, limit: number) {
-        /*
-        let offset = 0;
-        try {
-            offset = parseInt(next.split('offset=')[1].split('&')[0]);
-        } catch (error) {
-
-        }
-        if (offset) {
-            let backOffset = offset - limit;
-            if (backOffset >= 0) {
-                return mainServer.getBaseURL() + '/pokemon?&offset=' + backOffset + 'limit=' + limit;
-            }
-        }
-        return mainServer.getBaseURL() + '/pokemon?&offset=' + 0 + 'limit=' + limit;
-        */
-        return '';
-
-    }
 
 }
 
