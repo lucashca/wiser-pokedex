@@ -28,11 +28,6 @@ const scale = SCREEN_WIDTH / guidelineBaseWidth;
 
 export function scaleFont(size: number) {
     const newSize = size * scale;
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
 
-    if (Platform.OS === 'ios') {
-        return Math.round(PixelRatio.roundToNearestPixel(newSize));
-    } else {
-
-        return Math.round(PixelRatio.roundToNearestPixel(newSize));
-    }
 }
