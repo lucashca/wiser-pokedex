@@ -89,6 +89,11 @@ class PokeListItem extends PureComponent<Props, State> {
 
     };
 
+    componentDidUpdate = () => {
+        if (!this.props.pokemonData) {
+            this.getPokemonDataInCache();
+        }
+    };
 
     componentWillUnmount = () => {
         this.mounted = false;

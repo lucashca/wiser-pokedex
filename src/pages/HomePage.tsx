@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react';
-import { Animated, FlatList, SafeAreaView, StyleSheet, ToastAndroid, TouchableOpacity } from 'react-native';
+import { Animated, FlatList, SafeAreaView, StyleSheet, ToastAndroid, TouchableOpacity, View } from 'react-native';
 
 import { connect } from 'react-redux';
 import { PokeballBgImageSvg } from '../assets/images';
@@ -41,12 +41,14 @@ class HomePage extends Component<any, State> {
     }
 
     componentDidUpdate() {
+
         if (this.props.searchInputText != '') {
             pokemonService.getPokemonByName(this.props.searchInputText.toLowerCase().trim()).then((res: any) => {
                 if (res?.status == 404) {
                     this.showToastWithGravity('No Pokémon found!');
                 } else {
                     let val = { name: res.data.name, url: res.config.baseURL + res.config.url };
+
                     this.setState({ pokemonByName: val });
                 }
                 this.props.dispatch(storeActionsCleanSearchText());
@@ -112,9 +114,12 @@ class HomePage extends Component<any, State> {
                         />
                     }
                     {this.state.pokemonByName &&
-                        <TouchableOpacity style={styles.pokemonItem} onPress={() => this.onClickItem(this.state.pokemonByName)}>
-                            <PokeListItem {...this.state.pokemonByName} />
-                        </TouchableOpacity>
+                        <View style={styles.pokemonItemView}>
+                            <TouchableOpacity style={styles.pokemonItem} onPress={() => this.onClickItem(this.state.pokemonByName)}>
+                                <PokeListItem {...this.state.pokemonByName} />
+                            </TouchableOpacity>
+                        </View>
+
                     }
                     {this.getBtnComponent()}
                 </MainContainer>
@@ -128,9 +133,12 @@ class HomePage extends Component<any, State> {
 
 const styles = StyleSheet.create({
     pokemonItem: {
-        flex: 1,
-        marginTop: 10,
+
+        marginTop: 20,
         paddingTop: 170,
+    },
+    pokemonItemView: {
+        flex: 1,
 
     },
     background: {
