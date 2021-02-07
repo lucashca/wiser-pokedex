@@ -25,7 +25,10 @@ export enum EvolutionDataStoreActions {
     CLEAN = 'CLEAN_EVOLUTION',
 }
 
-export enum PokeListStoreActions {
-    ADD = 'ADD_POKELIST',
-    CLEAN = 'CLEAN_POKELIST',
+export enum StoreActionsTypes {
+    ADD_POKELIST = 'ADD_POKELIST',
+    CLEAN_POKELIST = 'CLEAN_POKELIST',
+    SET_SEARCH_TEXT = 'SET_SEARCH_TEXT',
+    CLEAN_SEARCH_TEXT = 'CLEAN_SEARCH_TEXT',
+    SAVE_POKEDATA = 'SAVE_POKEDATA'
 }

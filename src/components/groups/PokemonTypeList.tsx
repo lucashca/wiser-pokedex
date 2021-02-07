@@ -1,6 +1,5 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { PokemonTypesEnum } from "../../utils/enums";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { PokemonType } from "../itens/PokemonTypeItem";
 
 
@@ -9,39 +8,29 @@ export interface Props {
 }
 
 
-export default class PokemonTypeList extends Component<Props> {
 
-    constructor(props: Props) {
-        super(props);
-    }
-
-
-    render() {
-        if (this.props.types) {
-            if (this.props.types.length >= 2) {
+export const PokemonTypeList = (props: any) => {
+    if (props.types) {
+        if (props.types.length >= 2) {
+            return (
+                <View style={styles.typesBox}>
+                    <PokemonType type={props.types[0]} />
+                    <PokemonType type={props.types[1]} />
+                </View>
+            );
+        } else {
+            if (props.types.length == 1) {
                 return (
                     <View style={styles.typesBox}>
-                        <PokemonType type={this.props.types[0]} />
-                        <PokemonType type={this.props.types[1]} />
+                        <PokemonType type={props.types[0]} />
                     </View>
                 );
-            } else {
-                if (this.props.types.length == 1) {
-                    return (
-                        <View style={styles.typesBox}>
-                            <PokemonType type={this.props.types[0]} />
-                        </View>
-                    );
-                }
             }
         }
-        return (
-            <>
-            </>
-        );
     }
-
+    return (<></>);
 };
+
 
 
 const styles = StyleSheet.create({
@@ -49,7 +38,4 @@ const styles = StyleSheet.create({
     typesBox: {
         flexDirection: "row",
     },
-
-
-
 });

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Title, Description } from "../../styles/styles";
-import SearchInput from "./SearchInput";
+import SearchInput from "../unit/SearchInput";
 
 
 

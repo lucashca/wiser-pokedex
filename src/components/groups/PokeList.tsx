@@ -1,73 +1,69 @@
 
-import React, { Component } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import React from "react";
+import { Animated } from "react-native";
+import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { COLOR_TEXT_GRAY } from "../../styles/colors";
 import { Loading } from "../../styles/styles";
+import { PokemonItemList } from "../../utils/iterfaces";
 import PokeListItem from "../itens/PokeListItem";
 
-export interface Props {
+interface Props {
     data: any[];
     onScroll: Function;
     onScrollEnd: Function;
     style: any;
     onClickItem: Function;
+    setFlatListRef: Function;
 }
 
-export interface State {
-    data: any[];
-
-}
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 
-export default class PokeList extends Component<Props, State> {
+const ITEM_HEIGHT = 160;
 
+export const PokeList = (props: Props) => {
 
-    constructor(props: Props) {
-        super(props);
-    }
-
-
-
-
-    renderItem = ({ item }: any) => {
+    const renderItem = ({ item }: any) => {
         return (
-            <TouchableOpacity onPress={() => this.props.onClickItem(item)}>
+            <TouchableOpacity onPress={() => props.onClickItem(item)}>
                 <PokeListItem {...item} />
             </TouchableOpacity>
         );
     };
 
 
+    const getItemLayout = (data: any, index: any) => {
 
-    render() {
-        if (this.props.data && this.props.data.length > 0) {
-            return (
-                <FlatList
-                    data={this.props.data}
-                    renderItem={this.renderItem}
-                    keyExtractor={item => item.url}
-                    onScroll={(evt) => { this.props.onScroll(evt); }}
-                    onEndReached={(evt) => { this.props.onScrollEnd(evt); }}
-                    onEndReachedThreshold={0.1}
-                    style={this.props.style}
-                    contentContainerStyle={{ paddingBottom: 160 }}
-                />
-
-            );
-        } else {
-            return (
-                <Loading size='large' color='#6F6E78' />
-            );
-        }
+        return { length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index };
+    };
 
 
+    if (props.data && props.data.length > 0) {
+        return (
+            <AnimatedFlatList
+                key={'Flat-key'}
+                data={props.data}
+                renderItem={renderItem}
+                initialNumToRender={10}
+                scrollEventThrottle={16}
+                keyExtractor={(item: any) => item.url}
+                onScroll={(evt) => { props.onScroll(evt); }}
+                onEndReached={(evt) => { props.onScrollEnd(evt); }}
+                onEndReachedThreshold={1}
+                ref={(ref: any) => { props.setFlatListRef(ref); }}
+                style={props.style}
+                getItemLayout={getItemLayout}
+                contentContainerStyle={{ paddingBottom: 250 }
+                }
+            />
 
+        );
+    } else {
+        return (
+            <Loading size='large' color={COLOR_TEXT_GRAY} />
+        );
     }
-}
 
+};
 
-
-const styles = StyleSheet.create({
-
-
-});

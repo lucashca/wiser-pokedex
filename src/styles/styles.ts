@@ -1,41 +1,44 @@
 import styled from 'styled-components/native';
+import { COLOR_BLACK, COLOR_TEXT_GRAY, COLOR_WHITE } from './colors';
+import { FONT_FAMILY_REGULAR, FONT_SIZE_APPLICATION_TITLE, FONT_SIZE_DESCRIPTION, FONT_SIZE_POKEMON_NAME, FONT_SIZE_POKEMON_TYPE, FONT_SIZE_TITLE, FONT_WEIGHT_BOLD_NUM, FONT_WEIGHT_REGULAR_NUM } from './typography';
 
 export const Title = styled.Text`
-  color: #000;
-  fontFamily: 'SFProDisplay-Regular';
-  fontSize:32px;
-  fontWeight:700;
+  color: ${COLOR_BLACK};
+  fontFamily: ${FONT_FAMILY_REGULAR};
+  fontSize:${FONT_SIZE_APPLICATION_TITLE}px
+  fontWeight:${FONT_WEIGHT_BOLD_NUM};
   marginBottom:10px;
 
 `;
 
 export const LevelText = styled.Text`
-  color: #000;
-  fontFamily: 'SFProDisplay-Regular';
-  fontSize:12px;
-  fontWeight:700;
+  color: ${COLOR_BLACK};
+  fontFamily: ${FONT_FAMILY_REGULAR};
+  fontSize:${FONT_SIZE_POKEMON_TYPE}px
+  fontWeight:${FONT_WEIGHT_BOLD_NUM};
+  textAlign:center;
 `;
 
 export const Description = styled.Text`
-  color: #747476;
-  fontFamily: 'SFProDisplay-Regular';
-  fontSize:16px;
+  color: ${COLOR_TEXT_GRAY};
+  fontFamily: ${FONT_FAMILY_REGULAR};
+  fontSize:${FONT_SIZE_DESCRIPTION}px;
   lineHeight:19px;
 `;
 
 
 export const PokemonName = styled.Text`
-  color: #fff;
-  fontFamily: 'SFProDisplay-Regular';
-  fontSize:26px;
-  fontWeight:700
+  color: ${COLOR_WHITE};
+  fontFamily: ${FONT_FAMILY_REGULAR};
+  fontSize:${FONT_SIZE_POKEMON_NAME}px;
+  fontWeight:${FONT_WEIGHT_BOLD_NUM}
 `;
 
 export const PokemonTypeText = styled.Text`
-  color: #fff;
-  fontFamily: 'SFProDisplay-Regular';
-  fontSize:12px;
-  fontWeight:500;
+  color: ${COLOR_WHITE};
+  fontFamily: ${FONT_FAMILY_REGULAR};
+  fontSize:${FONT_SIZE_POKEMON_TYPE}px
+  fontWeight:${FONT_WEIGHT_BOLD_NUM};
   marginTop:-1px; 
   `;
 
@@ -43,10 +46,10 @@ export const PokemonTypeText = styled.Text`
 
 
 export const PokemonId = styled.Text`
-  color: rgba(23, 23, 27, 0.6);
-  fontFamily: 'SFProDisplay-Regular';
-  fontSize:12px;
-  fontWeight:bold;
+  color: ${COLOR_BLACK};
+  fontFamily: ${FONT_FAMILY_REGULAR};
+  fontSize:${FONT_SIZE_POKEMON_TYPE}px
+  fontWeight:${FONT_WEIGHT_BOLD_NUM};
   lineHeight:14px;
 `;
 
@@ -74,14 +77,14 @@ export const SearchBarInput = styled.TextInput`
 
 export const Loading = styled.ActivityIndicator`
   flex: 1;
-  color:#6F6E78;
+  color:${COLOR_TEXT_GRAY};
 `;
 
 
 export const ImageBox = styled.View`
   flex: 1;
   alignItems: center;
-  justifyContent: flex-end;
+ 
   paddingBottom: 10px;
  
 `;
@@ -93,31 +96,19 @@ export const ImageBoxNoFlex = styled.View`
  
 `;
 
-export const PokemonArtName = styled.Text`
-fontFamily: 'SFProDisplay-Regular';
-fontSize:100px;
-fontWeight:700;
-marginBottom:10px;
-textAlign:center;
-color:#fff;
-textShadowColor:#f0f,
-textShadowOffset:5px 5px,
-`;
-
 
 export const InfoTitleText = styled.Text`
-fontFamily: 'SFProDisplay-Regular';
+fontFamily: ${FONT_FAMILY_REGULAR};
 fontSize:16px;
-fontWeight:700;
+fontWeight:${FONT_WEIGHT_BOLD_NUM};
 lineHeight:19px;
 `;
 
 export const PokemonDescriptionText = styled.Text`
-  fontFamily: 'SFProDisplay-Regular';  
-  color:#747476;
-  fontWeight:400;
-  fontSize:15.5px;
-  textAlign:justify;
+  fontFamily: ${FONT_FAMILY_REGULAR};  
+  color:${COLOR_TEXT_GRAY};
+  fontWeight:${FONT_WEIGHT_REGULAR_NUM};
+  fontSize:${FONT_SIZE_DESCRIPTION}px;
   marginBottom:10px;
 `;
 
@@ -142,6 +133,12 @@ export const RowData = styled.View`
   flexDirection: row;
 `;
 
+export const RowDataProgress = styled.View`
+
+  padding:2px;
+  flexDirection: row;
+`;
+
 export const RowDataDouble = styled.View`
   flex: 2;
   padding:2px;
@@ -152,20 +149,20 @@ export const RowDataDouble = styled.View`
 
 export const RowDataTitle = styled.Text`
   fontFamily: SFProDisplay-Regular;
-  fontSize: 12px;
-  fontWeight: 500;
+  fontSize: ${FONT_SIZE_POKEMON_TYPE}px;
+  fontWeight: ${FONT_WEIGHT_BOLD_NUM};
 `;
 export const RowDataText = styled.Text`
   fontFamily: SFProDisplay-Regular;
-  fontSize: 16px;
-  fontWeight: 400;
-  color: #747476;
+  fontSize: ${FONT_SIZE_DESCRIPTION}px;
+  fontWeight: ${FONT_WEIGHT_REGULAR_NUM};
+  color: ${COLOR_TEXT_GRAY};
 `;
 
 
 export const TabScreen = styled.View`
   flex: 1;
-  backgroundColor: #fff;
+  backgroundColor: ${COLOR_WHITE};
   borderTopLeftRadius: 30px;
   borderTopRightRadius: 30px;
   padding: 40px;

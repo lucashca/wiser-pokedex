@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { getTypeInfoAndColorsByPokemonType } from "../../styles/colors";
 
 import { PokemonTypeText } from "../../styles/styles";
-import { PokemonTypesEnum } from "../../utils/enums";
-import { getTypeInfoAndColorsByPokemonType } from "../../utils/functions";
+
 
 
 export function PokemonType({ type }: any) {

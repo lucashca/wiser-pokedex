@@ -6,10 +6,14 @@ import PokeballBg from './pokeball_bg.svg';
 import PokeballBgType from './pokeball_type.svg';
 import Search from '../../assets/images/search.svg';
 import PokeballSm from '../../assets/images/pokeball_small.svg';
+import PokeballEv from '../../assets/images/pokeball_evolution.svg';
 
 import DotsL from '../../assets/images/dots_large.svg';
 import Arrow from '../../assets/images/arrow.svg';
+import ArrowLeft from '../../assets/images/arrow_left.svg';
 
+
+export const ArrowLeftSvg = ArrowLeft;
 export const ArrowSvg = Arrow;
 export const DotsSvg = Dots;
 export const DotsLargeSvg = DotsL;
@@ -19,5 +23,6 @@ export const MenuIconFilter = Icon2;
 export const MenuIconConfig = Icon3;
 export const PokeballBgImageSvg = PokeballBg;
 export const PokeballBgTypeSvg = PokeballBgType;
+export const PokebalEvolutionSvg = PokeballEv;
 export const SearchIcon = Search;
 

@@ -1,40 +1,49 @@
 import React, { Component } from "react";
-import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Dimensions, StyleSheet, ToastAndroid, TouchableOpacity, View } from "react-native";
 
 import { MenuIconConfig, MenuIconDots, MenuIconFilter } from "../../assets/images";
 const width = Dimensions.get('window').width; //full width
 
-export default class Menu extends Component {
+export const Menu = () => {
 
-    onClickConfig() {
-        console.log("onClickConfig");
-    }
+    const onClickConfig = () => {
+        showToastWithGravity('Show Generation Modal');
+    };
 
-    onClickFilter() {
-        console.log("onClickFilter");
-    }
+    const onClickFilter = () => {
+        showToastWithGravity('Show Sort Modal');
+    };
 
-    onClickDots() {
-        console.log("onClickDots");
-    }
+    const onClickDots = () => {
+        showToastWithGravity('Show Filter Modal');
+    };
 
-    render() {
-        return (
-            <View style={styles.menuBox}>
-                <TouchableOpacity onPress={this.onClickConfig}>
-                    <MenuIconConfig style={styles.icon} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.onClickFilter}>
-                    <MenuIconFilter style={styles.icon} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.onClickDots}>
-                    <MenuIconDots style={styles.icon} />
-                </TouchableOpacity>
-            </View>
-
+    const showToastWithGravity = (text: string) => {
+        ToastAndroid.showWithGravity(
+            text,
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
         );
-    }
-}
+    };
+
+
+
+    return (
+        <View style={styles.menuBox}>
+            <TouchableOpacity onPress={onClickConfig}>
+                <MenuIconConfig style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onClickFilter}>
+                <MenuIconFilter style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onClickDots}>
+                <MenuIconDots style={styles.icon} />
+            </TouchableOpacity>
+        </View>
+
+    );
+
+};
 
 
 const styles = StyleSheet.create({

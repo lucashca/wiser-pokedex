@@ -1,11 +1,10 @@
 
 
 import { NavigationContainer } from '@react-navigation/native';
-import React, { Component, constructor } from 'react';
-import HomePage from './src/components/pages/HomePage';
+import React from 'react';
 import { MainStack } from './src/navigations/MainStack';
 import { Provider } from 'react-redux';
-import store from './src/store/store';
+import store from './src/redux/stores/store';
 
 
 export default function App() {

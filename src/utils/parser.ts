@@ -1,5 +1,3 @@
-
-
 export function trasnformPokemonId(id: any) {
     if (id < 10) {
         id = "#00" + id;
@@ -11,7 +9,6 @@ export function trasnformPokemonId(id: any) {
         }
     }
     return id;
-
 }
 
 export function transformPokemonTypes(types: any) {
@@ -20,17 +17,13 @@ export function transformPokemonTypes(types: any) {
         type.push(t.type.name);
     }
     return type;
-
 }
 
 export function transformCaptalize(name: string) {
     return name[0].toUpperCase() + name.slice(1);
 }
 
-
-
 export function trasnforFlavorText(text: string) {
-
     return text.replace(/(\r\n|\n|\r)/gm, "");
 }
 
@@ -42,5 +35,4 @@ export function getMeterstoFootPol(metros: number) {
     } else {
         return pe + "'" + pol.toFixed(0) + "''";
     }
-
 };

@@ -1,13 +1,14 @@
-import React, { Component, PureComponent } from "react";
-import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
+import React, { PureComponent } from "react";
+import { StyleSheet, View } from "react-native";
 import { DotsSvg, PokeballBgTypeSvg } from "../../assets/images";
 import pokemonService from "../../service/pokemonService";
-import { Loading, PokemonId, PokemonName } from "../../styles/styles";
-import { getTypeInfoAndColorsByPokemonType } from "../../utils/functions";
+import { retrievePokemonData, storePokemonData } from "../../storage/persistanteStorage";
+import { getTypeInfoAndColorsByPokemonType } from "../../styles/colors";
+import { Loading } from "../../styles/styles";
+
 import { transformPokemonTypes, trasnformPokemonId, transformCaptalize } from "../../utils/parser";
-import PokemonTypeList from "../groups/PokemonTypeList";
-import { PokemonArtWork } from "./PokemonArtWork";
-import { PokemonPersonalData } from "./PokemonPersonalData";
+import { PokemonArtWork } from "../unit/PokemonArtWork";
+import { PokemonPersonalData } from "../unit/PokemonPersonalData";
 
 
 export interface State {
@@ -31,31 +32,45 @@ export default class PokeListItem extends PureComponent<Props, State> {
     constructor(props: Props, state: State) {
         super(props);
         this.state = state;
-
-        this.getPokemonData();
+        this.getPokemonDataInCache();
     }
 
-    getPokemonData() {
+    getPokemonDataInCache() {
+        retrievePokemonData(this.props.name).then((res) => {
+            if (res) {
+                try {
+                    let pokemonData = JSON.parse(res);
+                    this.setState({ ...pokemonData });
+                } catch (error) {
+                    this.getPokemonInWeb();
+                }
+            } else {
+                this.getPokemonInWeb();
+            }
+        });
+    }
+
+    getPokemonInWeb() {
+
         pokemonService.getUrl(this.props.url).then((res: any) => {
             let id = trasnformPokemonId(res.data.id);
             let type = transformPokemonTypes(res.data.types);
             let name = transformCaptalize(this.props.name);
-
-            this.setState({
+            let pokemonData = {
                 id,
                 type,
                 name,
                 artworkUrl:
                     res.data.sprites.other['official-artwork'].front_default
-            }, () => {
+            };
+            storePokemonData(this.props.name, pokemonData);
 
-            });
+            this.setState({ ...pokemonData });
         });
     }
 
     render() {
         let bgColor = getTypeInfoAndColorsByPokemonType('').backgroundColor;
-
 
         if (this.state.id) {
             bgColor = getTypeInfoAndColorsByPokemonType(this.state.type[0]).backgroundColor;
