@@ -13,11 +13,8 @@ export interface PokemonItemList {
 }
 
 export interface MyStore {
-    pokemonsList: PokemonItemList[];
     pokemonsData: any,
     searchInputText: string,
-    nextUrl: string,
-    backUrl: string;
 }
 export interface ActionRedux {
     type: string,
